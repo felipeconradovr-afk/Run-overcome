@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Run & Overcome</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <header class="header">
+        <div class="logo">RUN<span>.OVERCOME</span></div>
+        <div class="header-actions">
+            <button class="btn-admin-hidden" id="btnOpenAdmin" title="Painel Admin"><i class="fa-solid fa-user-shield"></i> Admin</button>
+            <button class="btn-login" id="btnLogin">Entrar / Cadastrar</button>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <span class="nike-tagline">JUST DO IT.</span>
+            <h1 class="main-title">REMEMBER WHY YOU STARTED</h1>
+            <p class="hero-subtitle">A dor é temporária, o orgulho de superar seus limites é para sempre.</p>
+            
+            <nav class="nav-tabs">
+                <button class="tab-btn active" onclick="openTab('home')"><i class="fa-solid fa-house"></i> Início</button>
+                <button class="tab-btn locked" onclick="openTab('calendario')"><i class="fa-solid fa-calendar-days"></i> Calendário</button>
+                <button class="tab-btn locked" onclick="openTab('metas')"><i class="fa-solid fa-trophy"></i> Metas & Treinos</button>
+                <button class="tab-btn locked" onclick="openTab('chat')"><i class="fa-solid fa-comments"></i> Chat da Galera</button>
+            </nav>
+        </div>
+    </section>
+
+    <!-- MODAL DE LOGIN / CADASTRO DA GALERA -->
+    <div id="modalAuth" class="modal">
+        <div class="modal-content modal-animated">
+            <span class="close-btn" id="btnCloseModal">&times;</span>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLoginBtn" onclick="switchAuthMode('login')">Acessar Conta</button>
+                <button class="auth-tab-btn" id="tabRegisterBtn" onclick="switchAuthMode('register')">Criar Conta</button>
+            </div>
+
+            <form id="formLogin" class="auth-form active-form">
+                <h2><i class="fa-solid fa-right-to-bracket"></i> Entrar</h2>
+                <input type="text" id="loginUsername" placeholder="Nome de usuário ou E-mail" required>
+                <input type="password" id="loginPassword" placeholder="Sua senha" required>
+                <button type="submit" class="btn-success">Entrar na Plataforma</button>
+            </form>
+
+            <form id="formRegister" class="auth-form">
+                <h2><i class="fa-solid fa-user-plus"></i> Nova Conta</h2>
+                <input type="text" id="regUsername" placeholder="Nome de Usuário" required>
+                <input type="email" id="regEmail" placeholder="Seu E-mail" required>
+                <input type="password" id="regPassword" placeholder="Sua Senha" required>
+                <button type="submit" class="btn-primary">Finalizar Cadastro</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- PAINEL DE ADMIN -->
+    <div id="modalAdmin" class="modal">
+        <div class="modal-content modal-animated" id="adminModalBox">
+            <span class="close-btn" id="btnCloseAdmin">&times;</span>
+            
+            <div id="adminLoginForm">
+                <h2><i class="fa-solid fa-lock"></i> Acesso Restrito Admin</h2>
+                <p class="admin-subtitle">Digite a chave mestra para gerenciar o sistema</p>
+                <form id="formAdminAuth">
+                    <input type="password" id="inputAdminPass" placeholder="Senha do Administrador" required>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Acessar Painel</button>
+                </form>
+            </div>
+
+            <div id="adminDashboard" class="hidden">
+                <h2><i class="fa-solid fa-user-shield"></i> Painel Geral de Administração</h2>
+                
+                <div class="admin-sections-grid">
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-calendar-plus"></i> Adicionar Prova no Calendário</h3>
+                        <form id="formAdminEvento" class="admin-form">
+                            <input type="text" id="adminNomeEvento" placeholder="Nome da Prova (Ex: Maratona SP)" required>
+                            <input type="datetime-local" id="adminDataEvento" required>
+                            <button type="submit" class="btn-primary btn-sm">Cadastrar Prova</button>
+                        </form>
+                    </div>
+
+                    <div class="admin-card">
+                        <h3><i class="fa-solid fa-users"></i> Gerenciar Usuários</h3>
+                        <div class="table-responsive">
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Usuário</th>
+                                        <th>E-mail</th>
+                                        <th>Ações</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="adminUsersTable"></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <main class="container" id="dashboard">
+        
+        <!-- INÍCIO -->
+        <div id="tab-home" class="tab-content active-content">
+            <section class="card">
+                <h3><i class="fa-solid fa-trophy"></i> Ranking de Superação (Pódio do Mês)</h3>
+                <div class="podium-container">
+                    <div class="podium-step step-2">
+                        <div class="podium-avatar">
+                            <i class="fa-solid fa-medal icon-silver"></i>
+                            <span>MS</span>
+                        </div>
+                        <strong class="podium-name">Marcos S.</strong>
+                        <span class="podium-km">35 km</span>
+                        <div class="podium-block block-2">2º</div>
+                    </div>
+
+                    <div class="podium-step step-1">
+                        <i class="fa-solid fa-crown icon-crown-top"></i>
+                        <div class="podium-avatar top-avatar">
+                            <span>F</span>
+                        </div>
+                        <strong class="podium-name">Felipe (Líder)</strong>
+                        <span class="podium-km">42 km</span>
+                        <div class="podium-block block-1">1º</div>
+                    </div>
+
+                    <div class="podium-step step-3">
+                        <div class="podium-avatar">
+                            <i class="fa-solid fa-award icon-bronze"></i>
+                            <span>GS</span>
+                        </div>
+                        <strong class="podium-name">Gabriel S.</strong>
+                        <span class="podium-km">28 km</span>
+                        <div class="podium-block block-3">3º</div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header-flex">
+                    <h3><i class="fa-solid fa-bolt"></i> Pense Nisso Antes do Treino</h3>
+                    <button class="btn-sm" onclick="toggleAddQuote()"><i class="fa-solid fa-plus"></i> Adicionar Frase</button>
+                </div>
+                <div id="addQuoteBox" class="add-box hidden">
+                    <input type="text" id="inputQuote" placeholder="Escreva uma frase motivacional...">
+                    <button class="btn-primary btn-sm" onclick="salvarFrase()">Publicar</button>
+                </div>
+                <div class="quotes-grid" id="quotesGrid">
+                    <div class="quote-card"><i class="fa-solid fa-quote-left"></i><p>Não importa o quão devagar você vá, desde que não pare.</p></div>
+                    <div class="quote-card"><i class="fa-solid fa-quote-left"></i><p>Sua única disputa é contra quem você foi ontem.</p></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <div class="card-header-flex">
+                    <h3><i class="fa-solid fa-camera"></i> Galeria da Tropa</h3>
+                    <label for="inputFoto" class="btn-sm btn-upload"><i class="fa-solid fa-upload"></i> Enviar Foto</label>
+                    <input type="file" id="inputFoto" accept="image/*" onchange="uploadFoto(event)" style="display:none;">
+                </div>
+                <div class="galeria-grid" id="galeriaGrid"></div>
+            </section>
+        </div>
+
+        <!-- BLOQUEADO -->
+        <div id="tab-bloqueado" class="tab-content">
+            <section class="card locked-card">
+                <i class="fa-solid fa-lock locked-icon"></i>
+                <h2>Área Exclusiva para Membros</h2>
+                <p>Faça login ou crie sua conta para acessar o Calendário, Metas, Treinos e Chat da Galera!</p>
+                <button class="btn-primary" onclick="openAuthModal()">Entrar / Cadastrar Agora</button>
+            </section>
+        </div>
+
+        <!-- CALENDÁRIO -->
+        <div id="tab-calendario" class="tab-content">
+            <section class="card banner-maratona">
+                <span class="badge">Próximo Desafio</span>
+                <h2 id="tituloMaratona"><i class="fa-solid fa-flag-checkered"></i> Nenhuma Prova Agendada</h2>
+                <p><i class="fa-regular fa-calendar"></i> Data: <span id="dataMaratonaText">--/--/----</span></p>
+                
+                <div class="countdown-container">
+                    <div class="time-box"><span id="days">00</span><small>Dias</small></div>
+                    <div class="time-box"><span id="hours">00</span><small>Horas</small></div>
+                    <div class="time-box"><span id="minutes">00</span><small>Min</small></div>
+                    <div class="time-box"><span id="seconds">00</span><small>Seg</small></div>
+                </div>
+            </section>
+
+            <section class="card">
+                <h3><i class="fa-solid fa-list-ul"></i> Calendário Oficial de Provas</h3>
+                <div id="listaEventosCalendario" class="eventos-list"></div>
+            </section>
+        </div>
+
+        <!-- METAS E TREINOS -->
+        <div id="tab-metas" class="tab-content">
+            <section class="card">
+                <h3><i class="fa-solid fa-bars-progress"></i> Progresso Semanal</h3>
+                <div class="progress-bar-bg">
+                    <div class="progress-bar-fill" id="progressBar" style="width: 0%;">0%</div>
+                </div>
+                <small id="progressText">0 km de 30 km concluídos</small>
+            </section>
+
+            <section class="card">
+                <h3><i class="fa-solid fa-calculator"></i> Calculadora de Pace</h3>
+                <div class="pace-calc-grid">
+                    <input type="number" id="paceDistancia" placeholder="Distância (km)" step="0.1">
+                    <input type="number" id="paceTempo" placeholder="Tempo Total (minutos)">
+                    <button type="button" class="btn-primary" onclick="calcularPace()">Calcular</button>
+                </div>
+                <div id="paceResultado" class="pace-result"></div>
+            </section>
+
+            <section class="card">
+                <h3><i class="fa-solid fa-stopwatch"></i> Registrar Treino & Superação</h3>
+                <form id="formTreino">
+                    <input type="number" id="inputDistancia" placeholder="Distância em km (ex: 10)" step="0.1" required>
+                    <select id="selectDificuldade" required>
+                        <option value="" disabled selected>Qual foi a maior dificuldade?</option>
+                        <option value="Cansaço / Preguiça">Cansaço / Preguiça</option>
+                        <option value="Clima (Chuva/Calor)">Clima (Chuva/Calor)</option>
+                        <option value="Dores / Lesão">Dores / Lesão</option>
+                        <option value="Falta de Tempo">Falta de Tempo / Acordou Cedo</option>
+                        <option value="Desânimo Mental">Desânimo Mental</option>
+                    </select>
+                    <textarea id="inputSuperacao" placeholder="Como você superou isso hoje?" required></textarea>
+                    <button type="submit" class="btn-primary">Salvar Conquista</button>
+                </form>
+            </section>
+
+            <section class="card">
+                <h3><i class="fa-solid fa-list-check"></i> Feed de Superações da Galera</h3>
+                <div id="feedConquistas" class="feed-list"></div>
+            </section>
+        </div>
+
+        <!-- CHAT -->
+        <div id="tab-chat" class="tab-content">
+            <section class="card chat-card">
+                <h3><i class="fa-solid fa-comments"></i> Chat da Galera</h3>
+                <div id="chatMessages" class="chat-messages"></div>
+                <form id="formChat" class="chat-input-area">
+                    <input type="text" id="inputChat" placeholder="Envie uma mensagem..." required>
+                    <button type="submit" class="btn-chat"><i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </section>
+        </div>
+
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
