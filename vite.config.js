@@ -1,9 +1,9 @@
 import { defineConfig } from 'vite';
 
 export default defineConfig({
-  root: './www', // ou a pasta onde o index.html está localizado
+  // Removemos a propriedade root para que ele use a raiz padrão onde o index.html já está
   build: {
-    outDir: '../dist',
+    outDir: 'dist',
     emptyOutDir: true,
   }
 });
