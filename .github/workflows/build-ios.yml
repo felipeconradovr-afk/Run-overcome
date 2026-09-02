@@ -16,12 +16,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Debug Package.json
-        run: |
-          pwd
-          ls -la
-          cat package.json
-
       - name: Install Dependencies
         run: npm install
 
