@@ -1,5 +1,8 @@
-{
-  "appId": "com.run.overcome",
-  "appName": "Run.Overcome",
-  "webDir": "www"
-}
+import { defineConfig } from 'vite';
+
+export default defineConfig({
+  build: {
+    outDir: 'www',
+    emptyOutDir: false,
+  }
+});
