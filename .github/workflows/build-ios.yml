@@ -19,15 +19,17 @@ jobs:
       - name: Install Dependencies
         run: |
           npm install
-          npm install vite --save-dev
+          npm install vite @capacitor/cli @capacitor/ios --save-dev
 
       - name: Build Web App
         run: npm run build
 
-      - name: Initialize Capacitor iOS
-        run: npx cap sync ios
+      - name: Add and Sync Capacitor iOS
+        run: |
+          npx cap add ios || true
+          npx cap sync ios
 
       - name: Build iOS Archive
         run: |
           cd ios/App
-          xcodebuild -workspace App.xcworkspace -scheme App -destination "generic/platform=iOS" -archivePath App.xcarchive archive
+          xcodebuild -workspace App.xcworkspace -scheme App -destination "generic/platform=iOS" -archivePath App.xcarchive archive CODE_SIGNING_ALLOWED=NO
