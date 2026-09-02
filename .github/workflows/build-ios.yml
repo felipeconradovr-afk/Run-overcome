@@ -17,9 +17,7 @@ jobs:
           node-version: 20
 
       - name: Install Dependencies
-        run: |
-          npm install
-          npm install vite @capacitor/cli @capacitor/ios --save-dev
+        run: npm install --legacy-peer-deps
 
       - name: Build Web App
         run: npm run build
