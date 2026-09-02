@@ -22,9 +22,10 @@ jobs:
       - name: Build Web App
         run: npm run build
 
-      - name: Add and Sync Capacitor iOS
+      - name: Regenerate Capacitor iOS Project
         run: |
-          npx cap add ios || true
+          rm -rf ios
+          npx cap add ios
           npx cap sync ios
 
       - name: Build iOS Archive
